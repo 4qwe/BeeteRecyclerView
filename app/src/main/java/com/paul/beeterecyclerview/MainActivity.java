@@ -30,15 +30,13 @@ public class MainActivity extends AppCompatActivity {
         beetListe.addLast("Radieschen");
         beetListe.addLast("Erbsen (gelb)");
 
-        myRecyclerView = findViewById(R.id.recyclerview); //Handler wird beschrieben
+        myRecyclerView = findViewById(R.id.recyclerview); //Handler
 
-        myBeeteListAdapter = new BeeteListAdapter(this, beetListe); // (Context context, LinkedList<String>)
-        //Konstruktor plus unsere Daten
-        //ab hier läuft der adapter
+        myBeeteListAdapter = new BeeteListAdapter(this, beetListe);// ab hier läuft der adapter
 
         myRecyclerView.setAdapter(myBeeteListAdapter); //set adapter for the recycler view layout element
 
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)); //layout manager
+        myRecyclerView.setLayoutManager(new LinearLayoutManager(this)); //layout manager
 
 
     }
