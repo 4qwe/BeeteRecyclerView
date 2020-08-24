@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.BeeteViewHolder> {
 
     private final LinkedList<String> beeteArray;
-    private LayoutInflater inflater;    //handler/initialisiertes objekt für den Inflater
+    private LayoutInflater inflater;    //handler/uninitialisiertes objekt für den Inflater
 
     public BeeteListAdapter(Context context, LinkedList<String> beeteWorte) { //Konstruktor
         this.beeteArray = beeteWorte;
@@ -23,7 +23,6 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
 
     @NonNull
     @Override
-
     public BeeteListAdapter.BeeteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflatedView = inflater.inflate(R.layout.beetliste_element, parent, false); //ein inflater macht mit einem XML ein View-Objekt
         return new BeeteViewHolder(inflatedView); //ab hier existiert unser viewholder

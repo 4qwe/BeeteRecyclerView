@@ -1,11 +1,10 @@
 package com.paul.beeterecyclerview;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,10 +13,15 @@ import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
 
+    final String LOG_TAG = MainActivity.class.getSimpleName();
+
+
     private RecyclerView myRecyclerView;
     private BeeteListAdapter myBeeteListAdapter;
 
     private final LinkedList<String> beetListe = new LinkedList<>();
+
+    public final static String EXTRA_NAME = "DESCRIPTIONFORDETAILEDVIEW";
 
 
     @Override
@@ -38,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
 
         myRecyclerView.setLayoutManager(new LinearLayoutManager(this)); //layout manager
 
+    }
 
+    public void openDetails(View view) {
+        Intent intent = new Intent(this, DetailedView.class);
+        String description = "desc";
+        intent.putExtra(EXTRA_NAME, description);
+        startActivity(intent);
     }
 }
