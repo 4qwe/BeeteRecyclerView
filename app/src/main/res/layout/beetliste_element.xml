@@ -11,7 +11,6 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="left"
-        android:onClick="openDetails"
         android:textSize="36sp"
         android:textStyle="bold" />
 </LinearLayout>

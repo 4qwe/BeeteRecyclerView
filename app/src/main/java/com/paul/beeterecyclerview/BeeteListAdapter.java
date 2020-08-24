@@ -16,9 +16,14 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
     private final LinkedList<String> beeteArray;
     private LayoutInflater inflater;    //handler/uninitialisiertes objekt für den Inflater
 
-    public BeeteListAdapter(Context context, LinkedList<String> beeteWorte) { //Konstruktor
+    private static RecyclerViewClickListener itemListener;
+    private Context mContext;
+
+    public BeeteListAdapter(Context context, LinkedList<String> beeteWorte, RecyclerViewClickListener itemListener) { //Konstruktor
+        this.mContext = context;
         this.beeteArray = beeteWorte;
-        inflater = LayoutInflater.from(context); //nutzt Context
+        this.itemListener = itemListener;
+        inflater = LayoutInflater.from(mContext); //nutzt Context
     }
 
     @NonNull
@@ -40,15 +45,20 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
         return beeteArray.size();
     }
 
-    public class BeeteViewHolder extends RecyclerView.ViewHolder {
+    public static class BeeteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final TextView beeteElementView; //Handler für einen View im Viewholder
 
         public BeeteViewHolder(View elementView) { //Konstruktor
             super(elementView); //Super-Konstruktor mit unserem View
             this.beeteElementView = elementView.findViewById(R.id.beetname); //speichert diesen View in der View-Variable des Viewholder
+            beeteElementView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            itemListener.recyclerViewListClicked(v, this.getLayoutPosition());
+        }
 
     }
 }
