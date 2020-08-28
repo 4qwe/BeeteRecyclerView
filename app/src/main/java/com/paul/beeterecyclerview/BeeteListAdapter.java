@@ -37,7 +37,7 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
     @Override
     public void onBindViewHolder(@NonNull BeeteListAdapter.BeeteViewHolder holder, int position) //onBind beschreibt das aktuelle view-element
     {
-        final String currentPos = beeteArray.get(position);
+        final String currentPos = beeteArray.get(position);// oder auch holder.getAdapterPosition()
         holder.beeteElementView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
