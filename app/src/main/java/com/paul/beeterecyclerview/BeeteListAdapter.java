@@ -1,6 +1,7 @@
 package com.paul.beeterecyclerview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.LinkedList;
 
+import static com.paul.beeterecyclerview.MainActivity.EXTRA_NAME;
+
 public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.BeeteViewHolder> {
 
     private final LinkedList<String> beeteArray;
     private LayoutInflater inflater;    //handler/uninitialisiertes objekt für den Inflater
 
-    private static RecyclerViewClickListener itemListener;
     private Context mContext;
 
-    public BeeteListAdapter(Context context, LinkedList<String> beeteWorte, RecyclerViewClickListener itemListener) { //Konstruktor
-        this.mContext = context;
+    public BeeteListAdapter(Context context, LinkedList<String> beeteWorte) { //Konstruktor
         this.beeteArray = beeteWorte;
-        this.itemListener = itemListener;
-        inflater = LayoutInflater.from(mContext); //nutzt Context
+        inflater = LayoutInflater.from(context); //nutzt Context
+        this.mContext = context;
     }
 
     @NonNull
@@ -36,8 +37,16 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
     @Override
     public void onBindViewHolder(@NonNull BeeteListAdapter.BeeteViewHolder holder, int position) //onBind beschreibt das aktuelle view-element
     {
-        String currentPos = beeteArray.get(position);
-        holder.beeteElementView.setText(currentPos);
+        final String currentPos = beeteArray.get(position);
+        holder.beeteElementView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, DetailedViewActivity.class);
+                intent.putExtra(EXTRA_NAME, currentPos);
+                mContext.startActivity(intent);
+            }
+        });
+        holder.beeteElementView.setText(currentPos); //Dies läuft einmal pro View. Deshalb kann man auch den onClick jedesmal setzen
     }
 
     @Override
@@ -45,20 +54,15 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
         return beeteArray.size();
     }
 
-    public static class BeeteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class BeeteViewHolder extends RecyclerView.ViewHolder {
 
         public final TextView beeteElementView; //Handler für einen View im Viewholder
 
         public BeeteViewHolder(View elementView) { //Konstruktor
             super(elementView); //Super-Konstruktor mit unserem View
             this.beeteElementView = elementView.findViewById(R.id.beetname); //speichert diesen View in der View-Variable des Viewholder
-            beeteElementView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            itemListener.recyclerViewListClicked(v, this.getLayoutPosition());
-        }
 
     }
 }

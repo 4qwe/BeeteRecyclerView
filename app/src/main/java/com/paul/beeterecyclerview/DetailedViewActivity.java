@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class DetailedView extends AppCompatActivity {
+public class DetailedViewActivity extends AppCompatActivity {
 
     private TextView description;
 
