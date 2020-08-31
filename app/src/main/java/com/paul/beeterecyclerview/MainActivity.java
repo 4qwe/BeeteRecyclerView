@@ -11,15 +11,13 @@ import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
 
-    final String LOG_TAG = MainActivity.class.getSimpleName();
-
 
     private RecyclerView myRecyclerView;
     private BeeteListAdapter myBeeteListAdapter;
 
     private final LinkedList<String> beetListe = new LinkedList<>();
 
-    public final static String EXTRA_NAME = "DESCRIPTIONFORDETAILEDVIEW";
+    public final static String EXTRA_NAME = "com.paul.beeterecyclerview.DESCRIPTION";
 
 
     @Override

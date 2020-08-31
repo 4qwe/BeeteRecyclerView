@@ -24,7 +24,7 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
     public BeeteListAdapter(Context context, LinkedList<String> beeteWorte) { //Konstruktor
         this.beeteArray = beeteWorte;
         inflater = LayoutInflater.from(context); //nutzt Context
-        this.mContext = context;
+        this.mContext = context; //context als member variable, weil benutzt hier, aber auch in onBind
     }
 
     @NonNull
