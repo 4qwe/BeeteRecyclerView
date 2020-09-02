@@ -15,6 +15,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public final static String EXTRA_NAME = "com.paul.beeterecyclerview.DESCRIPTION";
+    public final static String EXTRA_LEVELS = "com.paul.beeterecyclerview.WATERLEVELS";
 
     private BeeteViewModel mBeeteViewModel;
 

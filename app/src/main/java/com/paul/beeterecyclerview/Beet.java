@@ -13,11 +13,21 @@ public class Beet {
     @ColumnInfo(name = "description")
     private String desc;
 
+    @NonNull
+    @ColumnInfo(name = "water_levels")
+    public String levels;
+
     public Beet(@NonNull String desc) {
         this.desc = desc;
+        this.levels = String.format("%s%%", Integer.toString((int) ((Math.random()) * 100 + 1)));
     }
 
     public String getDesc() {
         return this.desc;
     }
+
+    public String getLevels() {
+        return this.levels;
+    }
+
 }

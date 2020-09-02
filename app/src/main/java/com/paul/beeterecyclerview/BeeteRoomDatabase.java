@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Beet.class}, version = 1, exportSchema = false)
+@Database(entities = {Beet.class}, version = 2, exportSchema = false)
 public abstract class BeeteRoomDatabase extends RoomDatabase {
 
     public abstract BeetDoa beetDoa();
@@ -28,7 +28,7 @@ public abstract class BeeteRoomDatabase extends RoomDatabase {
             synchronized (BeeteRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), BeeteRoomDatabase.class,
-                            "beet_database").addCallback(sRoomDatabaseCallback).build();
+                            "beet_database").addCallback(sRoomDatabaseCallback).fallbackToDestructiveMigration().build();
                     /*This code uses Room's database builder to create a RoomDatabase
                      object named "word_database" in the application context from the WordRoomDatabase class.
                      */

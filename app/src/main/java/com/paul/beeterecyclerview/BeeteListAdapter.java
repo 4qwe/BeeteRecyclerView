@@ -1,6 +1,7 @@
 package com.paul.beeterecyclerview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import static com.paul.beeterecyclerview.MainActivity.EXTRA_LEVELS;
+import static com.paul.beeterecyclerview.MainActivity.EXTRA_NAME;
+
 public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.BeeteViewHolder> {
 
     private List<Beet> beeteArray; //cached copy meiner Beete
     private final LayoutInflater inflater;    //handler/uninitialisiertes objekt für den Inflater
 
-    //private Context mContext;
+    private Context mContext;
 
     public BeeteListAdapter(Context context) { //Konstruktor
 
         inflater = LayoutInflater.from(context); //nutzt Context
-        // this.mContext = context; //context als member variable, weil benutzt hier, aber auch in onBind
+        this.mContext = context; //context als member variable, weil benutzt hier, aber auch in onBind
     }
 
     @NonNull
@@ -37,22 +41,21 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
 
         if (beeteArray != null) {
             Beet current = beeteArray.get(position);
+            holder.beeteElementView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, DetailedViewActivity.class);
+                    intent.putExtra(EXTRA_NAME, current.getDesc());
+                    intent.putExtra(EXTRA_LEVELS, current.getLevels());
+                    mContext.startActivity(intent);
+                }
+            });
             holder.beeteElementView.setText(current.getDesc());
         } else {
             holder.beeteElementView.setText("Beet data not ready");
         }
 
-        /*final String currentPos = beeteArray.get(position);// oder auch holder.getAdapterPosition()
-        holder.beeteElementView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, DetailedViewActivity.class);
-                intent.putExtra(EXTRA_NAME, currentPos);
-                mContext.startActivity(intent);
-            }
-        });
-        holder.beeteElementView.setText(currentPos); //Dies läuft einmal pro View. Deshalb kann man auch den onClick jedesmal setzen
-    */
+
     }
 
     void setBeeteArray(List<Beet> beete) {
