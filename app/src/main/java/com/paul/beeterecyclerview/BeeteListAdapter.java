@@ -1,7 +1,6 @@
 package com.paul.beeterecyclerview;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,21 +9,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.LinkedList;
-
-import static com.paul.beeterecyclerview.MainActivity.EXTRA_NAME;
+import java.util.List;
 
 public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.BeeteViewHolder> {
 
-    private final LinkedList<String> beeteArray;
-    private LayoutInflater inflater;    //handler/uninitialisiertes objekt für den Inflater
+    private List<Beet> beeteArray; //cached copy meiner Beete
+    private final LayoutInflater inflater;    //handler/uninitialisiertes objekt für den Inflater
 
-    private Context mContext;
+    //private Context mContext;
 
-    public BeeteListAdapter(Context context, LinkedList<String> beeteWorte) { //Konstruktor
-        this.beeteArray = beeteWorte;
+    public BeeteListAdapter(Context context) { //Konstruktor
+
         inflater = LayoutInflater.from(context); //nutzt Context
-        this.mContext = context; //context als member variable, weil benutzt hier, aber auch in onBind
+        // this.mContext = context; //context als member variable, weil benutzt hier, aber auch in onBind
     }
 
     @NonNull
@@ -37,7 +34,15 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
     @Override
     public void onBindViewHolder(@NonNull BeeteListAdapter.BeeteViewHolder holder, int position) //onBind beschreibt das aktuelle view-element
     {
-        final String currentPos = beeteArray.get(position);// oder auch holder.getAdapterPosition()
+
+        if (beeteArray != null) {
+            Beet current = beeteArray.get(position);
+            holder.beeteElementView.setText(current.getDesc());
+        } else {
+            holder.beeteElementView.setText("Beet data not ready");
+        }
+
+        /*final String currentPos = beeteArray.get(position);// oder auch holder.getAdapterPosition()
         holder.beeteElementView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,22 +52,29 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
             }
         });
         holder.beeteElementView.setText(currentPos); //Dies läuft einmal pro View. Deshalb kann man auch den onClick jedesmal setzen
+    */
+    }
+
+    void setBeeteArray(List<Beet> beete) {
+        beeteArray = beete;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() { //interna.. kA warum diese funktion extra aufgeführt
-        return beeteArray.size();
+        if (beeteArray != null)
+            return beeteArray.size();
+        else
+            return 0;
     }
 
     public class BeeteViewHolder extends RecyclerView.ViewHolder {
 
-        public final TextView beeteElementView; //Handler für einen View im Viewholder
+        private final TextView beeteElementView; //Handler für einen View im Viewholder
 
         public BeeteViewHolder(View elementView) { //Konstruktor
             super(elementView); //Super-Konstruktor mit unserem View
-            this.beeteElementView = elementView.findViewById(R.id.beetname); //speichert diesen View in der View-Variable des Viewholder
+            beeteElementView = elementView.findViewById(R.id.beetname); //speichert diesen View in der View-Variable des Viewholder
         }
-
-
     }
 }
