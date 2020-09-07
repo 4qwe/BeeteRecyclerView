@@ -14,7 +14,11 @@ import java.util.concurrent.Executors;
 @Database(entities = {Beet.class}, version = 2, exportSchema = false)
 public abstract class BeeteRoomDatabase extends RoomDatabase {
 
-    public abstract BeetDoa beetDoa();
+    //Be an abstract class that extends RoomDatabase
+    //Include the list of entities associated with the database within the annotation
+    //Contain an abstract method that has 0 arguments and returns the class that is annotated with @Dao
+
+    public abstract BeetDao beetDao();
 
     private static volatile BeeteRoomDatabase INSTANCE;
 
@@ -29,9 +33,6 @@ public abstract class BeeteRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), BeeteRoomDatabase.class,
                             "beet_database").addCallback(sRoomDatabaseCallback).fallbackToDestructiveMigration().build();
-                    /*This code uses Room's database builder to create a RoomDatabase
-                     object named "word_database" in the application context from the WordRoomDatabase class.
-                     */
                 }
             }
         }
@@ -45,7 +46,7 @@ public abstract class BeeteRoomDatabase extends RoomDatabase {
             super.onOpen(db);
 
             databaseWriteExecutor.execute(() -> {
-                BeetDoa dao = INSTANCE.beetDoa();
+                BeetDao dao = INSTANCE.beetDao();
                 dao.deleteAll();
 
                 Beet mBeet = new Beet("Potatoes");

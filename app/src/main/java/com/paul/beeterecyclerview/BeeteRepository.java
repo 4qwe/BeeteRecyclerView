@@ -8,12 +8,12 @@ import java.util.List;
 
 public class BeeteRepository {
 
-    private BeetDoa mBeetDao;
+    private BeetDao mBeetDao;
     private LiveData<List<Beet>> mAllBeete;
 
     BeeteRepository(Application application) {
         BeeteRoomDatabase db = BeeteRoomDatabase.getDatabase(application);
-        mBeetDao = db.beetDoa();
+        mBeetDao = db.beetDao();
         mAllBeete = mBeetDao.getAllBeete();
     }
 

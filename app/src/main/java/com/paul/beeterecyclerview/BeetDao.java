@@ -9,7 +9,7 @@ import androidx.room.Query;
 import java.util.List;
 
 @Dao
-public interface BeetDoa {
+public interface BeetDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Beet beet);

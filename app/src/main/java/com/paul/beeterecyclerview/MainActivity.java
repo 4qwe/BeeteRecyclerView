@@ -24,10 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       /* beetListe.addLast("Bananen");
-        beetListe.addLast("Tomaten");
-        beetListe.addLast("Radieschen");
-        beetListe.addLast("Erbsen (gelb)"); */ //populate DB in RoomDB onOpen
+        //populate DB in RoomDB onOpen
 
         RecyclerView myRecyclerView = findViewById(R.id.recyclerview); //Handler
         BeeteListAdapter myBeeteListAdapter = new BeeteListAdapter(this);// ab hier läuft der adapter
