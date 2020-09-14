@@ -15,9 +15,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public final static String EXTRA_NAME = "com.paul.beeterecyclerview.DESCRIPTION";
-    public final static String EXTRA_LEVELS = "com.paul.beeterecyclerview.WATERLEVELS";
 
-    private BeeteViewModel mBeeteViewModel;
+    private MainViewModel mMainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +27,17 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView myRecyclerView = findViewById(R.id.recyclerview); //Handler
         BeeteListAdapter myBeeteListAdapter = new BeeteListAdapter(this);// ab hier läuft der adapter
-        myRecyclerView.setAdapter(myBeeteListAdapter); //set adapter for the recycler view layout element
+        myRecyclerView.setAdapter(myBeeteListAdapter); //set adapter for recycler view layout element
         myRecyclerView.setLayoutManager(new LinearLayoutManager(this)); //layout manager
 
-        mBeeteViewModel = ViewModelProviders.of(this).get(BeeteViewModel.class);
-        mBeeteViewModel.getAllBeete().observe(this, new Observer<List<Beet>>() {
+        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class); //Provider erstellt und erinnert ViewModel
+        // jeweils bei Activity create
+        mMainViewModel.getAllBeete().observe(this, new Observer<List<Beet>>() {
             @Override
             public void onChanged(@Nullable final List<Beet> beete) {
                 myBeeteListAdapter.setBeeteArray(beete);
             }
         });
-
     }
 
 }

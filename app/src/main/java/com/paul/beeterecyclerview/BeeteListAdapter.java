@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import static com.paul.beeterecyclerview.MainActivity.EXTRA_LEVELS;
 import static com.paul.beeterecyclerview.MainActivity.EXTRA_NAME;
 
 public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.BeeteViewHolder> {
@@ -41,12 +40,12 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
 
         if (beeteArray != null) {
             Beet current = beeteArray.get(position);
+
             holder.beeteElementView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, DetailedViewActivity.class);
-                    intent.putExtra(EXTRA_NAME, current.getDesc());
-                    intent.putExtra(EXTRA_LEVELS, current.getLevels());
+                    Intent intent = new Intent(mContext, DetailedViewActivity.class); //context unserer Main Activity
+                    intent.putExtra(EXTRA_NAME, current.getDesc()); //current Beet Objekt ~ Description! //EXTRA string auch aus Main, importiert
                     mContext.startActivity(intent);
                 }
             });
@@ -77,7 +76,7 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
 
         public BeeteViewHolder(View elementView) { //Konstruktor
             super(elementView); //Super-Konstruktor mit unserem View
-            beeteElementView = elementView.findViewById(R.id.beetname); //speichert diesen View in der View-Variable des Viewholder
+            beeteElementView = elementView.findViewById(R.id.beetname); //View-Variable des Viewholder bereit für Gebrauch in onBind
         }
     }
 }

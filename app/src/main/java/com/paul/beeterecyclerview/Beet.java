@@ -30,4 +30,12 @@ public class Beet {
         return this.levels;
     }
 
+    public void setLevels(String s) {
+        this.levels = String.format("%s%%", s);
+    }
+
+    public void setDesc(String name) {
+        this.desc = name;
+    }
+
 }

@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -21,5 +22,11 @@ public interface BeetDao {
     @Query("SELECT * from beet ORDER BY description ASC")
         //SQL syntax
     LiveData<List<Beet>> getAllBeete();
+
+    @Query("SELECT * from beet WHERE description = :name")
+    LiveData<Beet> getBeetByName(String name);
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void update(Beet beet);
 
 }
