@@ -26,6 +26,9 @@ public interface BeetDao {
     @Query("SELECT * from beet WHERE description = :name")
     LiveData<Beet> getBeetByName(String name);
 
+    @Query("SELECT * from beet WHERE id = :id")
+    LiveData<Beet> getBeetByID(String id);
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void update(Beet beet);
 

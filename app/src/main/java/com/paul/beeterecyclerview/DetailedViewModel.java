@@ -15,8 +15,8 @@ public class DetailedViewModel extends AndroidViewModel {
         // hat zusätzlich und nutzt ausschließlich getAll methode und List<Beet> als Feld
     }
 
-    LiveData<Beet> getBeet(String name) { //getBeet gibt nur ein single Beet, den return wert von getBeet
-        return mRepository.getBeet(name);
+    LiveData<Beet> getBeet(String id) {
+        return mRepository.getBeet(id);
     }
 
     void update(Beet beet) {

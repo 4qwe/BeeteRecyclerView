@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final static String EXTRA_NAME = "com.paul.beeterecyclerview.DESCRIPTION";
+    public final static String EXTRA_ID = "com.paul.beeterecyclerview.ID";
 
     private MainViewModel mMainViewModel;
 

@@ -5,10 +5,16 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.UUID;
+
 @Entity
 public class Beet {
 
     @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "id")
+    private String id;
+
     @NonNull
     @ColumnInfo(name = "description")
     private String desc;
@@ -20,6 +26,7 @@ public class Beet {
     public Beet(@NonNull String desc) {
         this.desc = desc;
         this.levels = String.format("%s%%", Integer.toString((int) ((Math.random()) * 100 + 1)));
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getDesc() {
@@ -38,4 +45,12 @@ public class Beet {
         this.desc = name;
     }
 
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
 }

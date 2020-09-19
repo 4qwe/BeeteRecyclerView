@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import static com.paul.beeterecyclerview.MainActivity.EXTRA_NAME;
+import static com.paul.beeterecyclerview.MainActivity.EXTRA_ID;
 
 public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.BeeteViewHolder> {
 
@@ -45,7 +45,7 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, DetailedViewActivity.class); //context unserer Main Activity
-                    intent.putExtra(EXTRA_NAME, current.getDesc()); //current Beet Objekt ~ Description! //EXTRA string auch aus Main, importiert
+                    intent.putExtra(EXTRA_ID, current.getId()); //current Beet Objekt ~ Description! //EXTRA string auch aus Main, importiert
                     mContext.startActivity(intent);
                 }
             });

@@ -37,20 +37,25 @@ public class DetailedViewActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        String nameBeet = intent.getStringExtra(MainActivity.EXTRA_NAME); //nameBeet ist damit gleicher Beetname wie aus Adapter gerufen
+        String idBeet = intent.getStringExtra(MainActivity.EXTRA_ID); //nameBeet ist damit gleicher Beetname wie aus Adapter gerufen
 //folgender Observer könnte überall vorkommen! gilt aber nur für das Beet mit diesem Namen
 
         //-> DetailedRepository-ein Beet davon--//
-        mDetailedViewModel.getBeet(nameBeet).observe(this, new Observer<Beet>() { /*UI Felder die DB Daten zeigen haben alle einen observer*/
+        mDetailedViewModel.getBeet(idBeet).observe(this, new Observer<Beet>() { /*UI Felder die DB Daten zeigen haben alle einen observer*/
             @Override
             public void onChanged(@Nullable final Beet beet) {
                 description.setText(beet.getDesc());
                 levels.setText(beet.getLevels());
+                initEditText(beet);
 
             }
         });
 
 
+    }
+
+    void initEditText(Beet beet) {
+        mEditWordView.setText(beet.getLevels());
         updateGoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,14 +64,14 @@ public class DetailedViewActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), "No text", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-                    Beet beetNew = new Beet(nameBeet);
-                    beetNew.setLevels(mEditWordView.getText().toString());
-                    mDetailedViewModel.update(beetNew);
-                    Toast toast = Toast.makeText(getApplicationContext(), String.format("%s updated", nameBeet), Toast.LENGTH_SHORT);
+                    beet.setLevels(mEditWordView.getText().toString());
+                    mDetailedViewModel.update(beet);
+                    Toast toast = Toast.makeText(getApplicationContext(), String.format("%s updated", beet.getDesc()), Toast.LENGTH_SHORT);
                     toast.show();
                 }
             }
 
         });
+
     }
 }

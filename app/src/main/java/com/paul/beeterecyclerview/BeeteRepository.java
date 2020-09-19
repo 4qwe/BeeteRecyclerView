@@ -30,8 +30,8 @@ public class BeeteRepository {
     }
 
 
-    public LiveData<Beet> getBeet(String name) { //get Single Beet gebraucht im Repository der detailed Activity
-        return mBeetDao.getBeetByName(name);
+    public LiveData<Beet> getBeet(String id) {
+        return mBeetDao.getBeetByID(id);
     }
 }
 
