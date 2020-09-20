@@ -33,6 +33,14 @@ public class BeeteRepository {
     public LiveData<Beet> getBeet(String id) {
         return mBeetDao.getBeetByID(id);
     }
+
+    void deleteBeet(Beet beet) {
+        BeeteRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mBeetDao.deleteWord(beet);
+        });
+    }
+
+
 }
 
 

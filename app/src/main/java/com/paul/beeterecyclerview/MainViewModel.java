@@ -23,5 +23,9 @@ public class MainViewModel extends AndroidViewModel {
         return mAllBeete;
     }
 
+    public void deleteBeet(Beet beet) {
+        mRepository.deleteBeet(beet);
+    }
+
 
 }

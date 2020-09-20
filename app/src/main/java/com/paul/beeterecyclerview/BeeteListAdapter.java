@@ -50,6 +50,8 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
                 }
             });
             holder.beeteElementView.setText(current.getDesc());
+
+
         } else {
             holder.beeteElementView.setText("Beet data not ready");
         }
@@ -68,6 +70,10 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
             return beeteArray.size();
         else
             return 0;
+    }
+
+    public Beet getBeetAtPosition(int position) {
+        return beeteArray.get(position); //aus mainActivity später - Viewholder:getAdapterPosition
     }
 
     public class BeeteViewHolder extends RecyclerView.ViewHolder {

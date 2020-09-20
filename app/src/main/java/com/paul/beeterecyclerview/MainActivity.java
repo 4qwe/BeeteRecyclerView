@@ -1,11 +1,13 @@
 package com.paul.beeterecyclerview;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView myRecyclerView = findViewById(R.id.recyclerview); //Handler
         BeeteListAdapter myBeeteListAdapter = new BeeteListAdapter(this);// ab hier läuft der adapter
         myRecyclerView.setAdapter(myBeeteListAdapter); //set adapter for recycler view layout element
+
         myRecyclerView.setLayoutManager(new LinearLayoutManager(this)); //layout manager
 
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class); //Provider erstellt und erinnert ViewModel
@@ -38,6 +41,30 @@ public class MainActivity extends AppCompatActivity {
                 myBeeteListAdapter.setBeeteArray(beete);
             }
         });
+
+        ItemTouchHelper helper = new ItemTouchHelper(
+                new ItemTouchHelper.SimpleCallback(0,
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView,
+                                          RecyclerView.ViewHolder viewHolder,
+                                          RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder,
+                                         int direction) {
+                        int position = viewHolder.getAdapterPosition();
+                        Beet currentBeet = myBeeteListAdapter.getBeetAtPosition(position);
+                        Toast.makeText(MainActivity.this, "Deleting " +
+                                currentBeet.getDesc(), Toast.LENGTH_SHORT).show();
+                        mMainViewModel.deleteBeet(currentBeet);
+                    }
+                });
+
+        helper.attachToRecyclerView(myRecyclerView);
+
     }
 
 }
