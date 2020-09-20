@@ -18,8 +18,10 @@ public class DetailedViewActivity extends AppCompatActivity {
 
     private TextView description;
     private TextView levels;
-    private EditText mEditWordView;
-    private Button updateGoButton;
+    private EditText mEditTextLevelsView;
+    private EditText mEditTextDescView;
+    private Button updateDescButton;
+    private Button updateLevelsButton;
 
     private DetailedViewModel mDetailedViewModel;
 
@@ -30,8 +32,10 @@ public class DetailedViewActivity extends AppCompatActivity {
 
         description = findViewById(R.id.description);
         levels = findViewById(R.id.levels);
-        mEditWordView = findViewById(R.id.editText);
-        updateGoButton = findViewById(R.id.button2);
+        mEditTextLevelsView = findViewById(R.id.editText);
+        mEditTextDescView = findViewById(R.id.editText2);
+        updateLevelsButton = findViewById(R.id.button2);
+        updateDescButton = findViewById(R.id.button);
 
         mDetailedViewModel = ViewModelProviders.of(this).get(DetailedViewModel.class);
 
@@ -42,29 +46,29 @@ public class DetailedViewActivity extends AppCompatActivity {
 
         //-> DetailedRepository-ein Beet davon--//
         mDetailedViewModel.getBeet(idBeet).observe(this, new Observer<Beet>() { /*UI Felder die DB Daten zeigen haben alle einen observer*/
-            @Override
+            @Override //new Observer<BEET> setzt unser Beet variable für die ganze Activity
             public void onChanged(@Nullable final Beet beet) {
                 description.setText(beet.getDesc());
                 levels.setText(beet.getLevels());
-                initEditText(beet);
-
+                initWaterEditText(beet);
+                initDescEditText(beet);
             }
         });
 
 
     }
 
-    void initEditText(Beet beet) {
-        mEditWordView.setText(beet.getLevels());
-        updateGoButton.setOnClickListener(new View.OnClickListener() {
+    void initWaterEditText(Beet beet) {
+
+        updateLevelsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (TextUtils.isEmpty(mEditWordView.getText())) {
+                if (TextUtils.isEmpty(mEditTextLevelsView.getText())) {
                     Toast toast = Toast.makeText(getApplicationContext(), "No text", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-                    beet.setLevels(mEditWordView.getText().toString());
+                    beet.setLevels(mEditTextLevelsView.getText().toString());
                     mDetailedViewModel.update(beet);
                     Toast toast = Toast.makeText(getApplicationContext(), String.format("%s updated", beet.getDesc()), Toast.LENGTH_SHORT);
                     toast.show();
@@ -74,4 +78,27 @@ public class DetailedViewActivity extends AppCompatActivity {
         });
 
     }
+
+    void initDescEditText(Beet beet) {
+
+        updateDescButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (TextUtils.isEmpty(mEditTextDescView.getText())) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "No text", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    beet.setDesc(mEditTextDescView.getText().toString());
+                    mDetailedViewModel.update(beet);
+                    Toast toast = Toast.makeText(getApplicationContext(), String.format("%s updated", beet.getDesc()), Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+
+        });
+
+    }
+
+
 }

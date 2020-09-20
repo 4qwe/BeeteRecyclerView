@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class); //Provider erstellt und erinnert ViewModel
         // jeweils bei Activity create
-        mMainViewModel.getAllBeete().observe(this, new Observer<List<Beet>>() {
+        mMainViewModel.getAllBeete().observe(this, new Observer<List<Beet>>() { //getAll - Observer für alle Beete
             @Override
             public void onChanged(@Nullable final List<Beet> beete) {
                 myBeeteListAdapter.setBeeteArray(beete);
