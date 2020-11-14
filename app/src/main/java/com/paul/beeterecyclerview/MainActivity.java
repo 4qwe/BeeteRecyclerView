@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ItemTouchHelper helper = new ItemTouchHelper(
+        ItemTouchHelper helper = new ItemTouchHelper( //ITEMtouch helper statt setOnSwipeListener im adapter
                 new ItemTouchHelper.SimpleCallback(0,
                         ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                     @Override

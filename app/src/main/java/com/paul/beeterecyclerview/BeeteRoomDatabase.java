@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Beet.class}, version = 3, exportSchema = false)
+@Database(entities = {Beet.class}, version = 4, exportSchema = false)
 public abstract class BeeteRoomDatabase extends RoomDatabase {
 
     //Be an abstract class that extends RoomDatabase

@@ -7,6 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".DetailedViewActivity">
 
+    <ImageView
+        android:id="@+id/imageShower"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <Button
+        android:id="@+id/buttonImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="click here to set a pic"
+        app:layout_constraintBottom_toTopOf="@+id/imageShower"
+        app:layout_constraintEnd_toEndOf="@+id/imageShower"
+        app:layout_constraintStart_toStartOf="@+id/imageShower" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageShower" />
+
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"
@@ -25,8 +54,10 @@
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        app:layout_constraintVertical_bias="0.864" />
 
     <EditText
         android:id="@+id/editText"
@@ -37,10 +68,10 @@
         android:inputType="numberDecimal"
         app:layout_constraintBottom_toTopOf="@+id/levels"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.277"
+        app:layout_constraintHorizontal_bias="0.313"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description"
-        app:layout_constraintVertical_bias="0.515" />
+        app:layout_constraintVertical_bias="0.571" />
 
     <Button
         android:id="@+id/button2"
@@ -49,10 +80,8 @@
         android:text="Go"
         app:layout_constraintBottom_toBottomOf="@+id/editText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.272"
         app:layout_constraintStart_toEndOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="@+id/editText"
-        app:layout_constraintVertical_bias="0.333" />
+        app:layout_constraintTop_toTopOf="@+id/editText" />
 
     <EditText
         android:id="@+id/editText2"
@@ -75,5 +104,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editText2"
         app:layout_constraintTop_toTopOf="@+id/editText2" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="213dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="enterer"
+        app:layout_constraintBottom_toTopOf="@+id/levels"
+        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
