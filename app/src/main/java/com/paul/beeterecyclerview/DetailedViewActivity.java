@@ -74,7 +74,7 @@ public class DetailedViewActivity extends AppCompatActivity {
                 levels.setText(beet.getLevels());
                 initWaterEditText(beet);
                 initImgButton();
-                initSaveButton(beet, uriFromUcrop);
+                initSaveButton(beet);
                 if (beet.uriString != null)
                     showPreviousPic(beet);
             }
@@ -98,12 +98,12 @@ public class DetailedViewActivity extends AppCompatActivity {
         });
     }
 
-    void initSaveButton(Beet beet, Uri uri) {
+    void initSaveButton(Beet beet) {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (beet.uriString == null) {
-                    beet.setUriString(uri.toString());
+                    beet.setUriString(uriFromUcrop.toString());
                     mDetailedViewModel.update(beet);
                     Toast toast = Toast.makeText(getApplicationContext(), String.format("%s updated", beet.getDesc()), Toast.LENGTH_LONG);
                     toast.show();
