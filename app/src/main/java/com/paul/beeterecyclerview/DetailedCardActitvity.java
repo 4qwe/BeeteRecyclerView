@@ -5,10 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,53 +24,37 @@ import com.yalantis.ucrop.UCrop;
 import java.io.File;
 import java.io.IOException;
 
-public class DetailedViewActivity extends AppCompatActivity {
-
-    private TextView description;
-    private TextView levels;
-    private EditText mEditTextLevelsView;
-    private EditText mEditTextDescView;
-    private Button updateDescButton;
-    private Button updateLevelsButton;
-    private ImageView imgShower;
-    private Button imgButton;
-    private Button saveButton;
+public class DetailedCardActitvity extends AppCompatActivity {
 
 
-    private DetailedViewModel mDetailedViewModel;
+    private DetailedViewModel mDetailedCardViewModel; //variable hier vs variable in onCreate?
+
+    ImageView titleImage;
+    TextView titleText;
+    Button picTakeButton;
+    Button picSaveButton;
 
     Uri uriFromUcrop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detailed_view);
+        setContentView(R.layout.activity_detailed_card);
 
-        description = findViewById(R.id.description);
-        levels = findViewById(R.id.levels);
-        mEditTextLevelsView = findViewById(R.id.editText);
-        mEditTextDescView = findViewById(R.id.editText2);
-        updateLevelsButton = findViewById(R.id.button2);
-        updateDescButton = findViewById(R.id.button);
-        imgShower = findViewById(R.id.imageShower);
-        imgButton = findViewById(R.id.buttonImage);
-        saveButton = findViewById(R.id.button3);
+        titleImage = findViewById(R.id.title);
+        titleText = findViewById(R.id.titleText);
+        picTakeButton = findViewById(R.id.button1);
+        picSaveButton = findViewById(R.id.button2);
 
-        mDetailedViewModel = ViewModelProviders.of(this).get(DetailedViewModel.class);
+        mDetailedCardViewModel = ViewModelProviders.of(this).get(DetailedViewModel.class);
 
+        Intent intent = getIntent();
+        String idBeet = intent.getStringExtra(MainActivity.EXTRA_ID);
 
-        Intent intent = getIntent(); //Return the intent that started this activity.
-        String idBeet = intent.getStringExtra(MainActivity.EXTRA_ID); //nameBeet ist damit gleicher Beetname wie aus Adapter gerufen
-        //folgender Observer könnte überall vorkommen! gilt aber nur für das Beet mit diesem Namen
-
-        //-> DetailedRepository-ein Beet davon--//
-        mDetailedViewModel.getBeet(idBeet).observe(this, new Observer<Beet>() { /*UI Felder die DB Daten zeigen haben alle einen observer*/
-            @Override //new Observer<BEET> setzt unser Beet variable für die ganze Activity
-            public void onChanged(@Nullable final Beet beet) { //onChanged wird auch ohne Change 1x ausgeführt //was bedeutet final hier genau?
-                description.setText(beet.getDesc());
-                initDescEditText(beet);
-                levels.setText(beet.getLevels());
-                initWaterEditText(beet);
+        mDetailedCardViewModel.getBeet(idBeet).observe(this, new Observer<Beet>() {
+            @Override
+            public void onChanged(@Nullable final Beet beet) {
+                titleText.setText(beet.getDesc());
                 initImgButton();
                 initSaveButton(beet);
                 if (beet.uriString != null)
@@ -83,14 +65,13 @@ public class DetailedViewActivity extends AppCompatActivity {
 
     }
 
-
     private void showPreviousPic(Beet beet) {
-        Glide.with(this).load(Uri.parse(beet.uriString)).into(imgShower);
+        Glide.with(this).load(Uri.parse(beet.uriString)).into(titleImage);
     }
 
 
     void initImgButton() {
-        imgButton.setOnClickListener(new View.OnClickListener() {
+        picTakeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openCamera();
@@ -99,12 +80,12 @@ public class DetailedViewActivity extends AppCompatActivity {
     }
 
     void initSaveButton(Beet beet) {
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        picSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (beet.uriString == null) {
                     beet.setUriString(uriFromUcrop.toString());
-                    mDetailedViewModel.update(beet);
+                    mDetailedCardViewModel.update(beet);
                     Toast toast = Toast.makeText(getApplicationContext(), String.format("%s updated", beet.getDesc()), Toast.LENGTH_LONG);
                     toast.show();
                 } else {
@@ -114,49 +95,6 @@ public class DetailedViewActivity extends AppCompatActivity {
             }
         });
     }
-
-    void initWaterEditText(Beet beet) {
-
-        updateLevelsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (TextUtils.isEmpty(mEditTextLevelsView.getText())) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "No text", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    beet.setLevels(mEditTextLevelsView.getText().toString());
-                    mDetailedViewModel.update(beet);
-                    Toast toast = Toast.makeText(getApplicationContext(), String.format("%s updated", beet.getDesc()), Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            }
-
-        });
-
-    }
-
-    void initDescEditText(Beet beet) {
-
-        updateDescButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (TextUtils.isEmpty(mEditTextDescView.getText())) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "No text", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    beet.setDesc(mEditTextDescView.getText().toString());
-                    mDetailedViewModel.update(beet);
-                    Toast toast = Toast.makeText(getApplicationContext(), String.format("%s updated", beet.getDesc()), Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            }
-
-        });
-
-    }
-
 
     private void openCamera() {
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -206,8 +144,7 @@ public class DetailedViewActivity extends AppCompatActivity {
                 //und nehmen nun die Uri aus dem Intent extra
                 uriFromUcrop = UCrop.getOutput(data);
 
-                Glide.with(this).load(uriFromUcrop).into(imgShower);
-                imgButton.setText("dont click");
+                Glide.with(this).load(uriFromUcrop).into(titleImage);
             }
         }
     }

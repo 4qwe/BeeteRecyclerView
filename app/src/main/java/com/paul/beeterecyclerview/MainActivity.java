@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //populate DB in RoomDB onOpen
 
         RecyclerView myRecyclerView = findViewById(R.id.recyclerview); //Handler

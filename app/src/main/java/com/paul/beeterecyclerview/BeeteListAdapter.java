@@ -44,7 +44,7 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
             holder.beeteElementView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, DetailedViewActivity.class); //context unserer Main Activity
+                    Intent intent = new Intent(mContext, DetailedCardActitvity.class); //context unserer Main Activity
                     intent.putExtra(EXTRA_ID, current.getId()); //current Beet Objekt ~ Description! //EXTRA string auch aus Main, importiert
                     mContext.startActivity(intent);
                 }

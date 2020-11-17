@@ -21,6 +21,9 @@
             android:name=".DetailedViewActivity"
             android:parentActivityName=".MainActivity"></activity>
         <activity
+            android:name=".DetailedCardActitvity"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
