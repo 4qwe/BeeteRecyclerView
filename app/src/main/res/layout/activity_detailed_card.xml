@@ -45,13 +45,21 @@
                     android:text="textviewTitle"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/waterLevel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="textviewSecondary"
+                    android:text="null"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/levelsEditButton"
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="set water" />
 
                 <TextView
                     android:layout_width="wrap_content"

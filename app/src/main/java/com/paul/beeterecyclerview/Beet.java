@@ -21,14 +21,14 @@ public class Beet {
 
     @NonNull
     @ColumnInfo(name = "water_levels")
-    public String levels;
+    private String levels;
 
     @ColumnInfo(name = "uri")
     public String uriString;
 
     public Beet(@NonNull String desc) {
         this.desc = desc;
-        this.levels = String.format("%s%%", Integer.toString((int) ((Math.random()) * 100 + 1)));
+        this.levels = String.format("%s", Integer.toString((int) ((Math.random()) * 100 + 1)));
         this.id = UUID.randomUUID().toString();
         this.uriString = null;
     }
@@ -42,7 +42,7 @@ public class Beet {
     }
 
     public void setLevels(String s) {
-        this.levels = String.format("%s%%", s);
+        this.levels = s;
     }
 
     public void setDesc(String name) {

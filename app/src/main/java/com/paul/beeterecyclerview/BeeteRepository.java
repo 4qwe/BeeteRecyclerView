@@ -14,7 +14,7 @@ public class BeeteRepository {
 
     BeeteRepository(Application application) {
         BeeteRoomDatabase db = BeeteRoomDatabase.getDatabase(application);
-        mBeetDao = db.beetDao();
+        mBeetDao = db.beetDao(); //daoMethoden sind methoden für jedes element der datenbank
         mAllBeete = mBeetDao.getAllBeete();
     }
 

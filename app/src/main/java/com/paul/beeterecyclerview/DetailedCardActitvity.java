@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,12 +30,18 @@ public class DetailedCardActitvity extends AppCompatActivity {
 
     private DetailedViewModel mDetailedCardViewModel; //variable hier vs variable in onCreate?
 
-    ImageView titleImage;
-    TextView titleText;
-    Button picTakeButton;
-    Button picSaveButton;
+    private String currentPhotoPath = "";
 
-    Uri uriFromUcrop;
+    private Uri uriFromUcrop;
+
+    private Beet activityBeet;
+
+    private ImageView titleImage;
+    private TextView titleText;
+    private Button picTakeButton;
+    private Button picSaveButton;
+    private EditText levelsEditText;
+    private Button setLevelsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +52,49 @@ public class DetailedCardActitvity extends AppCompatActivity {
         titleText = findViewById(R.id.titleText);
         picTakeButton = findViewById(R.id.button1);
         picSaveButton = findViewById(R.id.button2);
+        levelsEditText = findViewById(R.id.waterLevel);
+        setLevelsButton = findViewById(R.id.levelsEditButton);
 
         mDetailedCardViewModel = ViewModelProviders.of(this).get(DetailedViewModel.class);
 
         Intent intent = getIntent();
         String idBeet = intent.getStringExtra(MainActivity.EXTRA_ID);
 
+        //activityBeet = mDetailedCardViewModel.getBeet(idBeet).getValue(); //wird im onChange beschrieben
+
         mDetailedCardViewModel.getBeet(idBeet).observe(this, new Observer<Beet>() {
             @Override
             public void onChanged(@Nullable final Beet beet) {
+                activityBeet = beet;
                 titleText.setText(beet.getDesc());
+                levelsEditText.setText(String.format("%s%%", beet.getLevels()));
                 initImgButton();
                 initSaveButton(beet);
+                initSetLevelsButton(beet);
                 if (beet.uriString != null)
                     showPreviousPic(beet);
             }
         });
 
 
+    }
+
+    private void initSetLevelsButton(Beet beet) {
+        setLevelsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String str = levelsEditText.getText().toString().replaceAll("%", "");
+                if (str.equals(beet.getLevels())) {
+                    Toast toast = Toast.makeText(getApplicationContext(), String.format("Water levels unchanged", beet.getDesc()), Toast.LENGTH_LONG);
+                    toast.show();
+                } else {
+                    beet.setLevels(str);
+                    mDetailedCardViewModel.update(beet);
+                    Toast toast = Toast.makeText(getApplicationContext(), String.format("%s updated", beet.getDesc()), Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
     }
 
     private void showPreviousPic(Beet beet) {
@@ -111,7 +143,6 @@ public class DetailedCardActitvity extends AppCompatActivity {
         startActivityForResult(pictureIntent, 113);
     }
 
-    String currentPhotoPath = "";
 
     private File getImageFile() throws IOException {
         String imageFileName = "JPEG_" + System.currentTimeMillis() + "_";
@@ -143,7 +174,6 @@ public class DetailedCardActitvity extends AppCompatActivity {
             if (data != null) { //wir kehren zum 2. und letzen mal in die activity zurück, bleiben dann hier
                 //und nehmen nun die Uri aus dem Intent extra
                 uriFromUcrop = UCrop.getOutput(data);
-
                 Glide.with(this).load(uriFromUcrop).into(titleImage);
             }
         }

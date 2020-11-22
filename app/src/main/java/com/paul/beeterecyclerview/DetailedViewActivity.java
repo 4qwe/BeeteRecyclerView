@@ -41,7 +41,9 @@ public class DetailedViewActivity extends AppCompatActivity {
 
     private DetailedViewModel mDetailedViewModel;
 
-    Uri uriFromUcrop;
+    private Uri uriFromUcrop;
+
+    private String currentPhotoPath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class DetailedViewActivity extends AppCompatActivity {
                 initWaterEditText(beet);
                 initImgButton();
                 initSaveButton(beet);
+
                 if (beet.uriString != null)
                     showPreviousPic(beet);
             }
@@ -173,7 +176,6 @@ public class DetailedViewActivity extends AppCompatActivity {
         startActivityForResult(pictureIntent, 113);
     }
 
-    String currentPhotoPath = "";
 
     private File getImageFile() throws IOException {
         String imageFileName = "JPEG_" + System.currentTimeMillis() + "_";
