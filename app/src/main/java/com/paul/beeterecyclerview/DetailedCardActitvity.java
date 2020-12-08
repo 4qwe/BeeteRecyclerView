@@ -39,7 +39,6 @@ public class DetailedCardActitvity extends AppCompatActivity {
     private ImageView titleImage;
     private TextView titleText;
     private Button picTakeButton;
-    private Button picSaveButton;
     private EditText levelsEditText;
     private Button setLevelsButton;
 
@@ -51,7 +50,6 @@ public class DetailedCardActitvity extends AppCompatActivity {
         titleImage = findViewById(R.id.title);
         titleText = findViewById(R.id.titleText);
         picTakeButton = findViewById(R.id.button1);
-        picSaveButton = findViewById(R.id.button2);
         levelsEditText = findViewById(R.id.waterLevel);
         setLevelsButton = findViewById(R.id.levelsEditButton);
 
@@ -60,7 +58,7 @@ public class DetailedCardActitvity extends AppCompatActivity {
         Intent intent = getIntent();
         String idBeet = intent.getStringExtra(MainActivity.EXTRA_ID);
 
-        //activityBeet = mDetailedCardViewModel.getBeet(idBeet).getValue(); //wird im onChange beschrieben
+        activityBeet = mDetailedCardViewModel.getBeet(idBeet).getValue(); //wird im onChange beschrieben
 
         mDetailedCardViewModel.getBeet(idBeet).observe(this, new Observer<Beet>() {
             @Override
@@ -69,7 +67,6 @@ public class DetailedCardActitvity extends AppCompatActivity {
                 titleText.setText(beet.getDesc());
                 levelsEditText.setText(String.format("%s%%", beet.getLevels()));
                 initImgButton();
-                initSaveButton(beet);
                 initSetLevelsButton(beet);
                 if (beet.uriString != null)
                     showPreviousPic(beet);
@@ -111,22 +108,6 @@ public class DetailedCardActitvity extends AppCompatActivity {
         });
     }
 
-    void initSaveButton(Beet beet) {
-        picSaveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (beet.uriString == null) {
-                    beet.setUriString(uriFromUcrop.toString());
-                    mDetailedCardViewModel.update(beet);
-                    Toast toast = Toast.makeText(getApplicationContext(), String.format("%s updated", beet.getDesc()), Toast.LENGTH_LONG);
-                    toast.show();
-                } else {
-                    Toast toast = Toast.makeText(getApplicationContext(), String.format("%s already has a pic", beet.getDesc()), Toast.LENGTH_LONG);
-                    toast.show();
-                }
-            }
-        });
-    }
 
     private void openCamera() {
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -134,7 +115,7 @@ public class DetailedCardActitvity extends AppCompatActivity {
         try {
             file = getImageFile(); // 1
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); //Logcat für Android!!
             return;
         }
         Uri uri;
@@ -153,7 +134,7 @@ public class DetailedCardActitvity extends AppCompatActivity {
         );
         System.out.println(storageDir.getAbsolutePath());
         if (storageDir.exists())
-            System.out.println("File exists");
+            System.out.println("File exists"); //todo Log.d !!
         else
             System.out.println("File not exists");
         File file = File.createTempFile(
@@ -175,6 +156,8 @@ public class DetailedCardActitvity extends AppCompatActivity {
                 //und nehmen nun die Uri aus dem Intent extra
                 uriFromUcrop = UCrop.getOutput(data);
                 Glide.with(this).load(uriFromUcrop).into(titleImage);
+                activityBeet.setUriString(uriFromUcrop.toString());
+                mDetailedCardViewModel.update(activityBeet);
             }
         }
     }

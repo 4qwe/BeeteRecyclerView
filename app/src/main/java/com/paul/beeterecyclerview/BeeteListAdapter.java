@@ -2,13 +2,18 @@ package com.paul.beeterecyclerview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -41,7 +46,7 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
         if (beeteArray != null) {
             Beet current = beeteArray.get(position);
 
-            holder.beeteElementView.setOnClickListener(new View.OnClickListener() {
+            holder.beeteElementCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, DetailedCardActitvity.class); //context unserer Main Activity
@@ -49,11 +54,16 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
                     mContext.startActivity(intent);
                 }
             });
-            holder.beeteElementView.setText(current.getDesc());
+
+            holder.beeteElementTextView.setText(current.getDesc());
+
+            ImageView previewPic = holder.beeteElementImageView;
+
+            if (current.getUriString() != null) showPreviewPic(current, previewPic);
 
 
         } else {
-            holder.beeteElementView.setText("Beet data not ready");
+            holder.beeteElementTextView.setText("Beet data not ready");
         }
 
 
@@ -62,6 +72,10 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
     void setBeeteArray(List<Beet> beete) {
         beeteArray = beete;
         notifyDataSetChanged();
+    }
+
+    private void showPreviewPic(Beet beet, ImageView iv) {
+        Glide.with(mContext).load(Uri.parse(beet.uriString)).into(iv);
     }
 
     @Override
@@ -78,11 +92,15 @@ public class BeeteListAdapter extends RecyclerView.Adapter<BeeteListAdapter.Beet
 
     public class BeeteViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView beeteElementView; //Handler für einen View im Viewholder
+        private final TextView beeteElementTextView; //Handler für einen View im Viewholder
+        private final ImageView beeteElementImageView; //Handler für einen View im Viewholder
+        private final CardView beeteElementCardView;
 
         public BeeteViewHolder(View elementView) { //Konstruktor
             super(elementView); //Super-Konstruktor mit unserem View
-            beeteElementView = elementView.findViewById(R.id.beetname); //View-Variable des Viewholder bereit für Gebrauch in onBind
+            beeteElementTextView = elementView.findViewById(R.id.beet_name); //View-Variable des Viewholder bereit für Gebrauch in onBind
+            beeteElementImageView = elementView.findViewById(R.id.beet_pic); //View-Variable des Viewholder bereit für Gebrauch in onBind
+            beeteElementCardView = elementView.findViewById(R.id.cv);
         }
     }
 }

@@ -27,8 +27,9 @@ public interface BeetDao {
         //SQL syntax
     LiveData<List<Beet>> getAllBeete();
 
-    @Query("SELECT * from beet WHERE description = :name")
+  /*  @Query("SELECT * from beet WHERE description = :name")
     LiveData<Beet> getBeetByName(String name);
+*/
 
     @Query("SELECT * from beet WHERE id = :id")
     LiveData<Beet> getBeetByID(String id);

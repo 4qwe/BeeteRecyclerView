@@ -1,13 +1,11 @@
 package com.paul.beeterecyclerview;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ItemTouchHelper helper = new ItemTouchHelper( //ITEMtouch helper statt setOnSwipeListener im adapter
+/*        ItemTouchHelper helper = new ItemTouchHelper( //ITEMtouch helper statt setOnSwipeListener im adapter
                 new ItemTouchHelper.SimpleCallback(0,
                         ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                     @Override
@@ -64,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        helper.attachToRecyclerView(myRecyclerView);
+        helper.attachToRecyclerView(myRecyclerView);*/
 
     }
 
